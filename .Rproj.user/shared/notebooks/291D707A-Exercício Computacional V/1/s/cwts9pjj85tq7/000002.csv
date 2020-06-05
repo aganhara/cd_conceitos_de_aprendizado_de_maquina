@@ -1,0 +1,8 @@
+"0","# Função hipótese Estimada"
+"0","h_x_estimado <- 2.8*x + 32"
+"0","MSE = (1/n)*sum(((y - h_x_estimado)^2))"
+"0","MSE"
+"1","[1]"
+"1"," 320.9044"
+"1","
+"

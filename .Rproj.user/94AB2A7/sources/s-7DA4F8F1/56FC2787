@@ -1,0 +1,33 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591315452371.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "56FC2787",
+    "lastKnownWriteTime" : 1591314833,
+    "last_content_update" : 1591315452371,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "CE0913C7",
+        "caption" : "PETR4.SA",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=PETR4.SA&cache_key=CE0913C7",
+        "displayedObservations" : "105",
+        "environment" : "",
+        "expression" : "PETR4.SA",
+        "object" : "PETR4.SA",
+        "preview" : "0",
+        "totalObservations" : "105",
+        "variables" : "6"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

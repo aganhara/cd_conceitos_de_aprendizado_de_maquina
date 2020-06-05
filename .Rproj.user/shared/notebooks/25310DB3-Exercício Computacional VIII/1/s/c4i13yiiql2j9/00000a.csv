@@ -1,0 +1,7 @@
+"0","# basic example of ohlc charts"
+"0","df <- data.frame(Date=index(petrobras),coredata(petrobras))"
+"0",""
+"0","fig <- df %>% plot_ly(x = ~Date, type=""candlestick"","
+"0","          open = ~PETR4.SA.Open, close = ~PETR4.SA.Close,"
+"0","          high = ~PETR4.SA.High, low = ~PETR4.SA.Low) "
+"0","fig %>% layout(title = ""Ações da Petrobrás"")"

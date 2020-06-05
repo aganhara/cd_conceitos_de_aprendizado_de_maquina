@@ -1,0 +1,34 @@
+---
+title: "Conceitos sobre Aprendizagem de Máquina - Exercícios Computacionais"
+author: "Anderson Ganhara"
+date: "6/2/2020"
+output:
+     html_document:
+         latex_engine: xelatex
+always_allow_html: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(stringr)
+```
+
+```{r child="Exercício Computacional I.Rmd"}
+```
+```{r child="Exercício Computacional II.Rmd"}
+```
+```{r child="Exercício Computacional III.Rmd"}
+```
+```{r child="Exercício Computacional IV.Rmd"}
+```
+```{r child="Exercício Computacional V.Rmd"}
+```
+```{r child="Exercício Computacional VI.Rmd"}
+```
+```{r child="Exercício Computacional VII.Rmd"}
+```
+```{r child="Exercício Computacional VIII.Rmd"}
+```
+
+

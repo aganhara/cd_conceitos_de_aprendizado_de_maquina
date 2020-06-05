@@ -1,0 +1,71 @@
+---
+title: "Exercício Computacional II"
+author: "Anderson Ganhara"
+date: "6/2/2020"
+output:
+     html_document:
+         latex_engine: xelatex
+---
+```{r echo=FALSE}
+library(ggplot2)
+```
+
+# Exercício Computacional II
+
+## Conceito explorado: Geração de Números Aleatórios
+
+Gere uma amostra com 1000 observações que segue a distribuição de probabilidade Gaussiana com
+média μ = 10 e desvio padrão σ = 5, Armazene os números aleatórios gerados no objeto r.
+```{r}
+?norm
+```
+rnorm é a função que simula variáveis normais. A forma de usar é:
+
+x <- rnorm(n, mean, sd)
+
+em que n é o tamanho da amostra (x será um vetor caso n > 1), e mean e sd são parâmetros (opcionais) dando a média e o desvio-padrão da normal. Se mean ou sd forem omitidos, serão usados os valores, respectivamente, de 0 e 1.
+
+
+```{r}
+n      = 1000
+media  = 10
+desvio = 5
+r <- rnorm(n, media, desvio)
+head(r)
+```
+
+
+1) Qual é o tipo de objeto r? Quais instruções você utilizou para verificar essa informação?
+```{r}
+str(r)
+summary(r)
+```
+
+
+2) Obtenha o histograma relacionado com o vetor r.
+```{r}
+hist(r, probability = TRUE, ylim = c(0,0.1), breaks = 20, main = 'Estimação do Histograma')
+```
+
+3) Plote, sobre o histograma, a curva de densidade normal informando os valores de média e
+desvio padrão. Dica: no R, as funções curve e dnorm são úteis para solucionar esse ponto.
+```{r}
+?dnorm
+# Esta função está dando erro ao ser gerada no compiler do pdf, verificar.
+#curve(dnorm(x, media, desvio), add = TRUE, col = 'red', lwd = 1)
+# dnorm -> d é densidade
+```
+
+4) Utilize o pacote ggplot2 da linguagem R para obter o mesmo resultado dos itens anteriores.
+```{r}
+ggplot(data.frame(r), aes(x = r)) + 
+  geom_histogram(aes(y =..density..),
+                 bins   = 20, 
+                 colour = "black", 
+                 fill = "white") +
+  stat_function(fun = dnorm, args = list(mean = media, sd = desvio))
+```
+```{r}
+?stat_function
+```
+

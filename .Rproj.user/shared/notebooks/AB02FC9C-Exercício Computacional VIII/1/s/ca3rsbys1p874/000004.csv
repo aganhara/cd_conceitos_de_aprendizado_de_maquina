@@ -1,0 +1,2 @@
+"0","plot(petrobras_fechamento, main = ""Fechamento Diário - Ações da Petrobrás"", "
+"0","     col = ""red"", xlab = ""Tempo"", ylab = ""Preço da Ação"", major.ticks = ""months"")"

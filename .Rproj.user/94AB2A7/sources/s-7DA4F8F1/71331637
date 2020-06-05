@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591314725092.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "71331637",
+    "lastKnownWriteTime" : 1591319404,
+    "last_content_update" : 1591319405916,
+    "path" : "~/Documents/Ciência de Dados e Decisões/Conceitos sobre aprendizado de máquina/Códigos R Exercícios/Exercício Computacional VIII.Rmd",
+    "project_path" : "Exercício Computacional VIII.Rmd",
+    "properties" : {
+        "cursorPosition" : "119,0",
+        "scrollLine" : "64"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

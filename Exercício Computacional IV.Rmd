@@ -1,0 +1,80 @@
+---
+title: "Exercício Computacional IV"
+author: "Anderson Ganhara"
+date: "6/2/2020"
+output: html_document
+---
+```{r echo = FALSE}
+library(dplyr)
+library(leaflet)
+```
+
+# Exercício Computacional IV
+
+## Conceito explorado: Estatística Descritiva e Análise Exploratória de Dados
+
+Considere o mesmo contexto do exercício anterior e um conjunto maior de arquivos .csv, que são
+exportados pelo instrumento de medida e armazenados em um diretório.
+
+1) Com os arquivos .csv armazenados no diretório, elabore uma rotina em linguagem R para
+fazer a leitura de todos os arquivos de forma otimizada.
+
+Lendo dados dos arquivos e adicionando o prefixo do path.
+```{r}
+temp_files <- paste0("Datasets/", list.files(path = "Datasets", pattern = ".csv"))
+temp_files
+```
+
+Unificando os dados do dataset em um dataset único
+```{r}
+files <- lapply(temp_files, read.delim)
+```
+
+2) Capture os dados de geolocalização (latitude, longitude) de todos os arquivos, faça os
+processamentos e transformações necessárias, visando o armazenamento em um dataframe.
+
+```{r}
+get_coords <- function(data) {
+  gps_lat_ponto_1  = data[12,1]
+  # gps_lat_ponto_1
+  gps_long_ponto_1 = data[13,1]
+  # gps_long_ponto_1
+  
+  # Conversão de grau, minuto fracionado
+  grau_lat_ponto_1        = substr(gps_lat_ponto_1, start = 17, stop = 18)
+  minuto_lat_ponto_1      = substr(gps_lat_ponto_1, start = 19, stop = 26)
+  grau_long_ponto_1       = substr(gps_long_ponto_1, start = 18, stop = 19)
+  minuto_long_ponto_1     = substr(gps_long_ponto_1, start = 20, stop = 27)
+  
+  # Composição dos valores numéricos de latitude e longitude
+  data.frame(
+    lat = (-1)*(as.numeric(grau_lat_ponto_1) + as.numeric(minuto_lat_ponto_1)/60),
+    lng = (-1)*(as.numeric(grau_long_ponto_1) + as.numeric(minuto_long_ponto_1)/60)
+  )
+}
+
+# Inicializando os vetores
+lat  = vector(mode="numeric", length = length(files))
+lng = vector(mode="numeric", length = length(files))
+
+for(i in 1:length(files)) {
+  coord <-  get_coords(files[[i]]);
+  lat[i] <- coord$lat
+  lng[i] <- coord$lng
+}
+
+# Criando o dataframe de coordenadas.
+
+coords <- data.frame(lat, lng) %>% mutate(Pontos = c("Ponto 1", "Ponto 2", "Ponto 3", "Ponto 4", "Ponto 5", "Ponto 6", "Ponto 7", "Ponto 8", "Ponto 9", "Ponto 10"))
+
+```
+
+
+3) Apresente no mapa os dados de geolocalização obtidos no item anterior.
+```{r}
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(lng = coords$lng, lat = coords$lat, label = coord$Pontos,
+             popup = paste0(coords$Pontos, "<br/>Lat: ", coords$lat, "<br/>Lng: ", coords$lng))
+```
+

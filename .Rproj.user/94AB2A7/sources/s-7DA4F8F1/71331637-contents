@@ -1,0 +1,122 @@
+---
+title: "Exercício Computacional VIII"
+author: "Anderson Ganhara"
+date: "6/2/2020"
+output: pdf_document
+---
+# Exercício Computacional VIII
+
+## Conceito explorado: Introdução à Análise de Séries Temporais
+
+Esse exercício tem o objetivo de explorar o assunto de séries temporais de forma introdutória. Para isso, existem alguns pacotes que podem nos auxiliar no objetivo desse exercício: capturar séries temporais do mercado financeiro e realizar sua visualização. Abaixo, estão listados três pacotes relacionados ao mercado financeiro que podem ser instalados e carregados na linguagem R.
+• install.packages("quantmod")
+• install.packages("xts")
+• install.packages("moments")
+
+Esses pacotes foram desenvolvidos exclusivamente para modelagem financeira quantitativa na lin-
+guagem R e permitem capturar séries temporais sobre as cotações de ações do mercado financeiro.
+
+Especificamente, estude e utilize a função getSymbols do pacote "quantmod" para obter séries tem-
+porais de diversas empresas presentes na bolsa de valores a partir de uma janela de tempo fornecida.
+
+Essa função consegue obter os dados diretamente das fontes "Yahoo Finance" (ainda ativo) e "Google
+Finance", que disponibilizam os dados gratuitamente. Utilize o nome "yahoo" para designar a fonte
+de dados na função getSymbols.
+
+```{r echo = FALSE}
+# install.packages("quantmod")
+# install.packages("xts")
+# install.packages("moments")
+library(quantmod)
+library(xts)
+library(moments)
+library(plotly)
+```
+
+
+1) Use a função getSymbols do pacote quantmod para capturar as cotações de ações da empresa
+Petrobras de janeiro/2020 até os dias atuais.
+```{r}
+  dt_inicio = as.Date("2020-01-01")
+  # Busca data atual do sistema.
+  dt_fim    = Sys.Date() %>% as.Date()
+  ?getSymbols
+  
+  getSymbols("PETR4.SA", src = "yahoo", from = dt_inicio, to = dt_fim, warnings = FALSE)
+  
+  # Verificando o tipo de objeto 
+  class(PETR4.SA)
+  is.xts(PETR4.SA)
+```
+
+Mostrando o formato dos dados
+```{r}
+summary(PETR4.SA)
+```
+
+Omitindo os NAS
+```{r}
+petrobras = na.omit(PETR4.SA)
+head(petrobras)
+
+# Observando o dataset - nós temos a cotação de abertura (open), a mais alta (high), mais baixa (low)
+# a cotação de fechamento (close), finalizando com volume e cotação ajustada.
+summary(petrobras)
+```
+
+
+2) Use a função candleChart do pacote quantmod para fazer a visualização da série temporal
+das cotações fechadas da Petrobras no período considerado. Pesquise e explore essa função;
+esse resultado é chamado de gráfico de velas (amplamente conhecido e usado em análises do
+mercado financeiro).
+```{r}
+petrobras_fechamento <- petrobras$PETR4.SA.Close
+?candleChart
+
+candleChart(petrobras_fechamento, name = "Fechamento da ações PETR4.SA")
+```
+
+Gerando o candlechart pela função plot
+```{r}
+plot(petrobras_fechamento, main = "Fechamento Diário - Ações da Petrobrás", 
+     col = "red", xlab = "Tempo", ylab = "Preço da Ação", major.ticks = "months")
+```
+
+
+3) Explore a série temporal obtida da empresa, teste outros períodos de tempo e identifique o
+significado dos campos trazidos da série.
+
+```{r}
+# basic example of ohlc charts
+df <- data.frame(Date=index(petrobras),coredata(petrobras))
+
+fig <- df %>% plot_ly(x = ~Date, type="candlestick",
+          open = ~PETR4.SA.Open, close = ~PETR4.SA.Close,
+          high = ~PETR4.SA.High, low = ~PETR4.SA.Low) 
+fig %>% layout(title = "Ações da Petrobrás")
+```
+
+Os dados contam com os valores de abertura/fechamento/máxima e mínima de ações da petrobrás.
+
+4) Use a função addBands, também do pacote quantmod, para plotar diretamente limites
+superior/inferior sobre a série temporal do item 
+  1). Podemos parametrizar a função fornecendo:
+  i) o período da média móvel e ii) a quantidade de desvio padrão relacionados com os limites.
+```{r}
+# Candle com toda a série
+candleChart(petrobras, name = "Evolução da ação PETR4.SA")
+# Adição de limites superior/inferior sobre a série temporal
+# Exemplo: bandas de bollinger
+?addBBands
+numero_desvios      = 1
+periodo_media_movel = 20
+addBBands(periodo_media_movel, numero_desvios)
+```
+
+https://www.bussoladoinvestidor.com.br/bandas-de-bollinger/
+
+5) A partir os itens anteriores, faça uma análise dos preços de cotações da Petrobras e verifique
+os reflexos do momento atual que estamos passando (março/abril/2020).
+
+Pelo gráfico é possível observar um forte movimento de quedra no preço da ação, inclusive em alguns períodos ficando abaixo no nível inferior da banda de bollinger.
+

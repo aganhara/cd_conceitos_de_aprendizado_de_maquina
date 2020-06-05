@@ -1,0 +1,4 @@
+"0","plot(x, y, col=1, pch=1, main = 'Gráfico de Dispersão', "
+"0","     col.main = 'black', "
+"0","     xlab = 'Variável Explanatória',"
+"0","     ylab = 'Variável de Saída')"

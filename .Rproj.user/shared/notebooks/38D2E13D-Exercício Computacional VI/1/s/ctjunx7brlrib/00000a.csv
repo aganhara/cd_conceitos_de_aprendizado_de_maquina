@@ -1,0 +1,5 @@
+"0",""
+"0","plot(std_vector,MSE_vector,col=1, pch=1, main = 'MSE - Mean Squared Error', "
+"0","     col.main = 'black', "
+"0","     xlab = 'Desvio padrão dos Erros',"
+"0","     ylab = 'MSE')"

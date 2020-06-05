@@ -1,0 +1,5 @@
+"0","# Usando o base plot system do R"
+"0","plot(n_vector,MSE_vector,col=1, pch=1, main = 'Erro Quadrático Médio', "
+"0","     col.main = 'black', "
+"0","     xlab = 'Número de Amostras',"
+"0","     ylab = 'MSE')"

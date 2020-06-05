@@ -1,0 +1,85 @@
+---
+title: "Exercício Computacional VI"
+author: "Anderson Ganhara"
+date: "6/2/2020"
+output: pdf_document
+---
+```{r echo= FALSE}
+library(dplyr)
+```
+
+# Exercício Computacional VI
+
+## Conceito explorado: MSE - Mean Square Error
+
+Considere o mesmo modelo de geração de dados do exercício anterior. O objetivo aqui é constatar o
+impacto do desvio padrão σ sobre a performance do modelo proposto pelos cientistas de dados. Para
+isso, utilize a instrução abaixo, em linguagem R, para a geração de um vetor com diversos valores de desvio padrão para a incerteza Gaussiana retratada pelo termo ε.
+ Vetor com valores de desvio padrão entre 0 e 20
+ std_vector = seq(1, 20, length.out = 100)
+Para que seja possível explorar e visualizar o impacto de σ - realize, pelo menos, 1000 iterações do algoritmo. Especificamente, para cada valor de desvio padrão avaliado, armazene e faça o cálculo da média aritmética sobre 1000 valores de performance expressos pelo MSE. Um dica é utilizar estruturas em loop (for) para a implementação das iterações.
+
+1) Construa o modelo de geração de dados incluindo as iterações para cada valor de σ
+
+```{r}
+n = 100
+num_iter = 1000
+
+#Construindo o vetor com os valores ordenados em ordem descrescente.
+std_vector = seq(1, 20, length.out = 100) %>% sort(decreasing = TRUE)
+
+x = seq(1, 100, length.out = n)
+
+#Inicializando os vetores
+MSE_vector = rep(0,length(std_vector))
+MSE        = rep(0,num_iter)
+
+std_vector
+```
+
+```{r}
+# Função hipótese verdadeira
+h_x <- 3*x + 30
+h_x
+```
+
+```{r}
+for(k in 1:length(std_vector)) {
+  for(i in 1:num_iter) {
+     # Ruído
+    epsilon <- rnorm(n, 0, std_vector[k])
+    
+    # Variável de saída
+    y <- h_x + epsilon
+    
+    # Função hipótese Estimada
+    h_x_estimado <- 2.8*x + 32
+    
+    # Erro quadrático médio para uma iteração
+    MSE[i] = (1/n)*sum(((y - h_x_estimado)^2))
+  }
+  
+  
+  # Erro quadrático médio para várias iterações  
+  MSE_vector[k] = mean(MSE)
+} 
+```
+
+2) Faça um gráfico que mostra o impacto de σ, colocado sobre o eixo x, sobre o desempenho
+indicado pelo MSE, apresentado no eixo y.
+
+```{r}
+
+plot(std_vector,MSE_vector,col=1, pch=1, main = 'MSE - Mean Squared Error', 
+     col.main = 'black', 
+     xlab = 'Desvio padrão dos Erros',
+     ylab = 'MSE')
+grid()
+
+```
+
+
+3) Faça uma análise: o impacto com o aumento ou redução de σ é significativo para o modelo?
+Qual a justificativa?
+
+O impacto é sim signficativo, tendo em vista que o MSE tende a crescer com níveis mais altos de ruído.

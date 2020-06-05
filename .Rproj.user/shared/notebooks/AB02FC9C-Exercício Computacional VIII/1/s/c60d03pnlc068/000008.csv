@@ -1,0 +1,6 @@
+"0","# Adição de limites superior/inferior sobre a série temporal"
+"0","# Exemplo: bandas de bollinger"
+"0","?addBBands"
+"0","numero_desvios      = 1"
+"0","periodo_media_movel = 20"
+"0","addBBands(periodo_media_movel, numero_desvios)"

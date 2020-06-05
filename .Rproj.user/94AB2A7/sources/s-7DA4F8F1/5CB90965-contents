@@ -1,0 +1,132 @@
+# ===============================================================================================
+# Curso: Introdução à Ciência de Dados e Decisões 
+
+
+# Aula - Conceitos sobre Aprendizagem de Máquina
+
+# Professor - Ricardo Augusto
+
+# ====================
+# Lista de Atividades
+
+# Exercício Computacional 8 - Introdução à Análise de Séries Temporais
+
+# ==================================================================
+# Instalação e Carregamento de Pacotes 
+
+install.packages("quantmod")
+install.packages("xts")
+install.packages("moments")
+library(quantmod)
+library(xts)
+library(moments)
+
+
+# https://www.quantmod.com
+# Framework com pacotes para modelagem financeira quantiativa - modelagem & trading para R
+
+
+# ==================================================================
+# Seleção de Janela de Tempo das Séries Temporais
+
+# Seleção de uma janela de tempo ou período de análise
+# ?as.Date
+Data_Inicio = as.Date("2020-01-01") 
+Data_Fim    = as.Date("2020-04-15")
+
+# ==================================================================
+# Importação de Dados
+
+# ?getSymbols -> do pacote quantmod
+# Load (carrega) e manage (gerencia) dados de múltipla fontes
+
+# Tanto o Yahoo como o Google oferecem um serviço gratuito de monitoramento
+# de ações do mercado financeiro. O serviço fornece as cotações de ações nas
+# principais bolsas de valores 
+
+# Uso da função gesymbols para acessar o serviço Yahoo Finance e capturar os valores
+# de ações das empresas (precisamos saber o código da empresa na bolsa)
+getSymbols("PETR4.SA", src = "yahoo", from = Data_Inicio, to = Data_Fim)
+?getSymbols
+# Verificando o tipo de objeto 
+class(PETR4.SA)
+is.xts(PETR4.SA)
+
+# É importante verificarmos, também, a estabilidade do serviço tanto do Yahoo como do Google
+# Outro ponto é a possibilidade de valores NA serem trazidos na série de temporal capturada
+Serie_Temporal_Petrobras = na.omit(PETR4.SA)
+Serie_Temporal_Petrobras
+
+class(Serie_Temporal_Petrobras)
+head(Serie_Temporal_Petrobras)
+View(Serie_Temporal_Petrobras)
+
+# Repare que o índice desse conjunto de dados consiste em datas - caracterização da série temporal
+# Observando o dataset - nós temos a cotação de abertura (open), a mais alta (high), mais baixa (low)
+# a cotação de fechamento (close), finalizando com volume e cotação ajustada.
+
+
+# ==================================================================
+# Processando Dados da Série Temporal 
+
+# Focando nos dados de fechamento da série de tempo da petrobras
+Serie_Petrobras_Close <- Serie_Temporal_Petrobras$PETR4.SA.Close
+Serie_Petrobras_Close
+# Verificar se temos uma série temporal
+is.xts(Serie_Petrobras_Close)
+
+# Alternativa (notação de slide)
+head(PETR4.SA)
+dados_close <- PETR4.SA[,"PETR4.SA.Close"]
+dados_close
+# Repare que o índice de tempo vem junto com a captura dos dados
+
+# Alternativa (método com instrução Cl)
+?Cl 
+# Extraçõ e transformação de colunas em time-series
+Open_Series   = Op(PETR4.SA)
+Closed_Series = Cl(PETR4.SA)
+
+Open_Series[1]
+Closed_Series[1]
+
+?OpCl
+
+Open_Closed_Series = OpCl(PETR4.SA)
+Open_Closed_Series[1]
+
+# Closed_Series[1]/Open_Series[1] - 1
+
+
+
+# ==================================================================
+# Criação de Plots para Visualização da Série Temporal
+
+# Vamos usar a função candlestick (gráfico de velas)
+?candleChart
+# Essa função cria charts ou gráficos padrões de visualização de séries temporais do mercado financeiro
+# Procure por gráfico de velas ou candlestick - importantes para interpretação dos resultados da bolsa de valores
+# Candle apenas do fechamento
+candleChart(Serie_Petrobras_Close)
+
+# Usando a função plot para gerar as visualizações 
+plot(Serie_Petrobras_Close, main = "Fechamento Diário - Ações da Petrobrás", 
+     col = "red", xlab = "Tempo", ylab = "Preço da Ação", major.ticks = "months")
+
+# Candle com toda a série
+candleChart(Serie_Temporal_Petrobras)
+
+
+# Adição de limites superior/inferior sobre a série temporal
+# Exemplo: bandas de bollinger
+?addBBands
+numero_desvios      = 1
+periodo_media_movel = 20
+addBBands(periodo_media_movel, numero_desvios)
+
+
+
+
+
+
+

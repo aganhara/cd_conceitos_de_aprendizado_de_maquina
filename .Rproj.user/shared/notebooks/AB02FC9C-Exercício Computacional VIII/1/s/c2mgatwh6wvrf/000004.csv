@@ -1,0 +1,4 @@
+"0","petrobras_fechamento <- petrobras$PETR4.SA.Close"
+"0","?candleChart"
+"0",""
+"0","candleChart(petrobras_fechamento, name = ""Fechamento da ações PETR4.SA"")"
